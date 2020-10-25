@@ -80,7 +80,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/FordF250.3ds", &num_vertices0);
+            modelo0 = Load3DS("../../Modelos/only_car.3ds", &num_vertices0);
             modelo1 = Load3DS("../../Modelos/RuedaFord.3ds", &num_vertices1);
             break;
 		}
