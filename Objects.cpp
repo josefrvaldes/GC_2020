@@ -15,6 +15,8 @@
 
 #include "Objects.h"
 #include <GL/glui.h>
+#include <sstream>
+#include <string>
 
 #include "load3ds.c"
 
@@ -65,6 +67,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../Modelos/final/suelo.3ds", &num_vertices0);
+            modelo1 = Load3DS("../../Modelos/final/carretera.3ds", &num_vertices1);
             break;
 		}
 		case PILA_COCHES_1: {  // Creación de la carretera
@@ -89,7 +92,64 @@ TPrimitiva::TPrimitiva(int DL, int t)
             modelo0 = Load3DS("../../Modelos/final/pilas_de_coches/piladecoches3.3ds", &num_vertices0);
             break;
 		}
-		case EDIFICIOS: {  // Creación de la carretera
+		case VALLAS_ID: {  // Creación de la carretera
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+
+
+            std::stringstream ssPath;
+            // concatenamos el id con el nombre del 3ds, para no repetir código
+            ssPath << "../../Modelos/final/vallas/valla" << ID << ".3ds";
+            std::string filePath = ssPath.str();
+            std::cout << filePath << std::endl;ç
+            modelo0 = Load3DS(&filePath[0], &num_vertices0);
+            break;
+		}
+		case FAROLAS_ID: {
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/farolas.3ds", &num_vertices0);
+            break;
+		}
+		case NEUMATICOS_ID: {
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/neumaticos.3ds", &num_vertices0);
+            break;
+		}
+		case PALOS_NEUMATICOS_ID: {
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/palo_neumaticos.3ds", &num_vertices0);
+            break;
+		}
+		case COCHE_ROTO_ID: {
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/pilas_de_coches/cochesuelto.3ds", &num_vertices0);
+            break;
+		}
+		case EDIFICIOS: {
 		    tx = ty = tz = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
@@ -139,6 +199,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
         case CARRETERA_ID: {
             if (escena.show_road) {
                 RenderStaticObject(modelo0, colores[0], num_vertices0);
+                RenderStaticObject(modelo1, colores[1], num_vertices1);
             }
             break;
         }
@@ -158,6 +219,26 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
         case EDIFICIOS: {
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             RenderStaticObject(modelo1, colores[1], num_vertices1);
+            break;
+        }
+
+        case VALLAS_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
+            break;
+        }
+
+        case NEUMATICOS_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
+            break;
+        }
+
+        case PALOS_NEUMATICOS_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
+            break;
+        }
+
+        case FAROLAS_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
         case COCHE_ID: {
@@ -193,7 +274,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
 
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.95, ty+0.45, tz));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty+0.25, tz));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
 
@@ -206,7 +287,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 // RUEDA Trasera Derecha : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.95, ty+0.45, tz));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty+0.25, tz));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
@@ -219,7 +300,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
 
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.95, ty+0.45, tz-4.24));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty+0.25, tz-2.10));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
 
@@ -232,7 +313,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 // RUEDA Trasera Derecha : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.95, ty+0.45, tz-4.24));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty+0.25, tz-2.10));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
@@ -418,7 +499,7 @@ void __fastcall TEscena::Render()
 {
     glm::mat4 rotateMatrix;
 
-    glClearColor(0.0, 0.7, 0.9, 1.0);
+    glClearColor(1.0, 0.65, 0.45, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

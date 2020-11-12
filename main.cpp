@@ -171,6 +171,12 @@ int main(int argc, char* argv[])
     TPrimitiva *pilaCoches1 = new TPrimitiva(1, PILA_COCHES_1);
     TPrimitiva *pilaCoches2 = new TPrimitiva(2, PILA_COCHES_2);
     TPrimitiva *edificios = new TPrimitiva(1, EDIFICIOS);
+    TPrimitiva *vallas1 = new TPrimitiva(1, VALLAS_ID);
+    TPrimitiva *vallas2 = new TPrimitiva(2, VALLAS_ID);
+    TPrimitiva *farola1 = new TPrimitiva(1, FAROLAS_ID);
+    TPrimitiva *neumaticos1 = new TPrimitiva(1, NEUMATICOS_ID);
+    TPrimitiva *palosNeumaticos1 = new TPrimitiva(1, PALOS_NEUMATICOS_ID);
+    TPrimitiva *cocheRoto1 = new TPrimitiva(1, COCHE_ROTO_ID);
     TPrimitiva *car1 = new TPrimitiva(1, COCHE_ID);
     TPrimitiva *car2 = new TPrimitiva(2, COCHE_ID);
 
@@ -178,13 +184,22 @@ int main(int argc, char* argv[])
     car2->colores[0][1] = 0.8;
     car2->colores[0][2] = 0.4;
     car2->colores[0][3] = 1.0;
-    car2->tx = 2;
+    car2->tx = 0.35;
+    car2->ty = 1.4f;
+    car1->ty = 1.4f;
     car2->tz = 3;
+    farola1->tz = 10;
 
     escena.AddObject(road);
     escena.AddObject(pilaCoches1);
     escena.AddObject(pilaCoches2);
+    escena.AddObject(vallas1);
+    escena.AddObject(vallas2);
     escena.AddObject(edificios);
+    escena.AddObject(farola1);
+    escena.AddObject(neumaticos1);
+    escena.AddObject(palosNeumaticos1);
+    escena.AddObject(cocheRoto1);
     escena.AddCar(car1);
     escena.AddCar(car2);
 
