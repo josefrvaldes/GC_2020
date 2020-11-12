@@ -102,12 +102,11 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
 
             std::stringstream ssPath;
+            // concatenamos el id con el nombre del 3ds, para no repetir código
             ssPath << "../../Modelos/final/vallas/valla" << ID << ".3ds";
             std::string filePath = ssPath.str();
-            std::cout << filePath << std::endl;
-            //string filePath = "../../Modelos/final/vallas/valla" + ID + ".3ds";
+            std::cout << filePath << std::endl;ç
             modelo0 = Load3DS(&filePath[0], &num_vertices0);
-
             break;
 		}
 		case FAROLAS_ID: {
@@ -138,6 +137,16 @@ TPrimitiva::TPrimitiva(int DL, int t)
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../Modelos/final/palo_neumaticos.3ds", &num_vertices0);
+            break;
+		}
+		case COCHE_ROTO_ID: {
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/pilas_de_coches/cochesuelto.3ds", &num_vertices0);
             break;
 		}
 		case EDIFICIOS: {
