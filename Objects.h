@@ -29,6 +29,9 @@
 
 // Identificadores internos de los objetos
 #define CARRETERA_ID    10
+#define PILA_COCHES_1    1000
+#define PILA_COCHES_2    1001
+#define EDIFICIOS        1002
 
 #define COCHE_ID	    100 // Un coche cada 100
 
@@ -88,6 +91,7 @@ public: // Atributos de la clase
 public: // Métodos
  		TPrimitiva(int DL, int tipo);
         void __fastcall Render(int seleccion, bool reflejo=false);
+        void __fastcall RenderStaticObject(float *modelo, float colores[], int numVertices);
 };
 
 //************************************************************** Clase TEscena
@@ -162,6 +166,7 @@ public: // Métodos
 		TPrimitiva __fastcall *GetCar(int id);
 
 		void __fastcall Pick3D(int mouse_x, int mouse_y);
+
 
 
 };
