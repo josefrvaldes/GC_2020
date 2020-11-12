@@ -64,7 +64,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/suelo.3ds", &num_vertices0);
+            modelo0 = Load3DS("../../Modelos/final/suelo.3ds", &num_vertices0);
             break;
 		}
 		case PILA_COCHES_1: {  // Creación de la carretera
@@ -74,8 +74,8 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/piladecoches1.3ds", &num_vertices0);
-            modelo1 = Load3DS("../../Modelos/piladecoches2.3ds", &num_vertices1);
+            modelo0 = Load3DS("../../Modelos/final/pilas_de_coches/piladecoches1.3ds", &num_vertices0);
+            modelo1 = Load3DS("../../Modelos/final/pilas_de_coches/piladecoches2.3ds", &num_vertices1);
 
             break;
 		}
@@ -86,7 +86,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/piladecoches3.3ds", &num_vertices0);
+            modelo0 = Load3DS("../../Modelos/final/pilas_de_coches/piladecoches3.3ds", &num_vertices0);
             break;
 		}
 		case EDIFICIOS: {  // Creación de la carretera
@@ -96,8 +96,8 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/edificio1.3ds", &num_vertices0);
-            modelo1 = Load3DS("../../Modelos/edificio2.3ds", &num_vertices1);
+            modelo0 = Load3DS("../../Modelos/final/edificios/edificio1.3ds", &num_vertices0);
+            modelo1 = Load3DS("../../Modelos/final/edificios/edificio2.3ds", &num_vertices1);
             break;
 		}
 		case COCHE_ID: { // Creación del coche
@@ -111,8 +111,8 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/coche2.0.3ds", &num_vertices0);
-            modelo1 = Load3DS("../../Modelos/rueda2.0.3ds", &num_vertices1);
+            modelo0 = Load3DS("../../Modelos/final/coche2.0.3ds", &num_vertices0);
+            modelo1 = Load3DS("../../Modelos/final/rueda2.0.3ds", &num_vertices1);
             break;
 		}
 	} // switch
@@ -170,9 +170,9 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 // Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelMatrix     = glm::translate(modelMatrix,glm::vec3(tx, ty, tz));
-                modelMatrix     = glm::rotate(modelMatrix, glm::radians(rx),glm::vec3(1,0,0));
-                modelMatrix     = glm::rotate(modelMatrix, glm::radians(ry),glm::vec3(0,1,0));
-                modelMatrix     = glm::rotate(modelMatrix, glm::radians(rz),glm::vec3(0,0,1));
+                //modelMatrix     = glm::rotate(modelMatrix, glm::radians(rx),glm::vec3(1,0,0));
+                //modelMatrix     = glm::rotate(modelMatrix, glm::radians(ry),glm::vec3(0,1,0));
+                //modelMatrix     = glm::rotate(modelMatrix, glm::radians(rz),glm::vec3(0,0,1));
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 

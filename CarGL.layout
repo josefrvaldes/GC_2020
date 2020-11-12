@@ -2,11 +2,6 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
-	<File name="Objects.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4080" topLine="134" />
-		</Cursor>
-	</File>
 	<File name="Shader.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1075" topLine="0" />
@@ -22,29 +17,29 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5528" topLine="159" />
-		</Cursor>
-	</File>
 	<File name="Shaders\VertexShader.glsl" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1285" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6103" topLine="125" />
+		</Cursor>
+	</File>
 	<File name="Objects.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5639" topLine="115" />
+			<Cursor1 position="5678" topLine="137" />
 		</Cursor>
-		<Folding>
-			<Collapse line="428" />
-			<Collapse line="572" />
-			<Collapse line="636" />
-		</Folding>
+	</File>
+	<File name="Objects.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2995" topLine="68" />
+		</Cursor>
 	</File>
 	<File name="Program.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1210" topLine="47" />
+			<Cursor1 position="1210" topLine="8" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
