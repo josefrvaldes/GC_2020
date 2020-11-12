@@ -110,7 +110,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             break;
 		}
-		case FAROLAS_ID: {  // Creación de la carretera
+		case FAROLAS_ID: {
 		    tx = ty = tz = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
@@ -120,7 +120,27 @@ TPrimitiva::TPrimitiva(int DL, int t)
             modelo0 = Load3DS("../../Modelos/final/farolas.3ds", &num_vertices0);
             break;
 		}
-		case EDIFICIOS: {  // Creación de la carretera
+		case NEUMATICOS_ID: {
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/neumaticos.3ds", &num_vertices0);
+            break;
+		}
+		case PALOS_NEUMATICOS_ID: {
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/palo_neumaticos.3ds", &num_vertices0);
+            break;
+		}
+		case EDIFICIOS: {
 		    tx = ty = tz = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
@@ -194,6 +214,21 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
         }
 
         case VALLAS_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
+            break;
+        }
+
+        case NEUMATICOS_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
+            break;
+        }
+
+        case PALOS_NEUMATICOS_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
+            break;
+        }
+
+        case FAROLAS_ID: {
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
@@ -455,7 +490,7 @@ void __fastcall TEscena::Render()
 {
     glm::mat4 rotateMatrix;
 
-    glClearColor(0.0, 0.7, 0.9, 1.0);
+    glClearColor(1.0, 0.65, 0.45, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
