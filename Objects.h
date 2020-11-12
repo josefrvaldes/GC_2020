@@ -31,6 +31,8 @@
 #define CARRETERA_ID    10
 #define PILA_COCHES_1    1000
 #define PILA_COCHES_2    1001
+#define VALLAS_ID        2000
+#define FAROLAS_ID       3000
 #define EDIFICIOS        1002
 
 #define COCHE_ID	    100 // Un coche cada 100
