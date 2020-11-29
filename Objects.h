@@ -121,6 +121,9 @@ public: // Atributos de la clase
 		int uColorLocation;
 		int uLuz0Location;
 
+		enum CAM_MODES {GENERAL, THIRD_PERSON, FIRST_PERSON, AEREA};
+        CAM_MODES camMode = AEREA;
+
 		glm::mat4 projectionMatrix; // Almacena la matriz de proyección
         glm::mat4 viewMatrix;       // Almacena la matriz de la vista (cámara)
 

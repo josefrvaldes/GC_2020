@@ -510,26 +510,72 @@ void __fastcall TEscena::Render()
     glm::mat4 rotateMatrix;
 
 
-    TPrimitiva *coche = GetCar(seleccion);
-    if(coche){
-        float camX = coche->tx - 3 * sin(glm::radians(coche->ry));
-        float camY = coche->ty + 3.0;
-        float camZ = coche->tz - 3 * cos(glm::radians(coche->ry));
+    switch(camMode) {
+    case GENERAL: {
+            rotateMatrix    = glm::make_mat4(view_rotate);
+            viewMatrix      = glm::mat4(1.0f);
+            viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
+            viewMatrix      = viewMatrix*rotateMatrix;
+            viewMatrix      = glm::scale(viewMatrix,glm::vec3(scale, scale, scale));
+        }
+        break;
 
-        glm::vec3 camPos = glm::vec3(camX, camY, camZ);
-        glm::vec3 camTarget = glm::vec3(coche->tx, coche->ty, coche->tz);
-        glm::vec3 camDirection = glm::normalize(camPos - camTarget);
-        viewMatrix = glm::lookAt(camPos, camTarget, glm::vec3(0,1,0));
+    case THIRD_PERSON: {
+            TPrimitiva *coche = GetCar(seleccion);
+            if(coche){
+                float camX = coche->tx - 3 * sin(glm::radians(coche->ry));
+                float camY = coche->ty + 1.3;
+                float camZ = coche->tz - 3 * cos(glm::radians(coche->ry));
+
+                glm::vec3 camPos = glm::vec3(camX, camY, camZ);
+                glm::vec3 camTarget = glm::vec3(coche->tx, coche->ty + 0.7, coche->tz);
+                viewMatrix = glm::lookAt(camPos, camTarget, glm::vec3(0,1,0));
+            }
+        }
+        break;
+
+    case FIRST_PERSON: {
+            TPrimitiva *coche = GetCar(seleccion);
+            if(coche){
+                float camX = coche->tx + 0.f * sin(glm::radians(coche->ry));
+                float camY = coche->ty + 0.7;
+                float camZ = coche->tz + 0.f * cos(glm::radians(coche->ry));
+
+
+                float targetX = coche->tx + 3 * sin(glm::radians(coche->ry));
+                float targetY = coche->ty + 0.7;
+                float targetZ = coche->tz + 3 * cos(glm::radians(coche->ry));
+
+                glm::vec3 camPos = glm::vec3(camX, camY, camZ);
+                glm::vec3 camTarget = glm::vec3(targetX, targetY, targetZ);
+                viewMatrix = glm::lookAt(camPos, camTarget, glm::vec3(0,1,0));
+            }
+        }
+        break;
+
+    case AEREA: {
+            TPrimitiva *coche = GetCar(seleccion);
+            if(coche){
+                glm::vec3 camPos = glm::vec3(coche->tx,50,coche->tz);
+                glm::vec3 camTarget = glm::vec3(coche->tx,0,coche->tz);
+
+
+                float camUpX = coche->tx + 1000 * sin(glm::radians(coche->ry));
+                float camUpY = 50;
+                float camUpZ = coche->tz + 1000 * cos(glm::radians(coche->ry));
+                glm::vec3 camUp = glm::vec3(camUpX, camUpY, camUpZ);
+                viewMatrix = glm::lookAt(camPos, camTarget, camUp);
+            }
+        }
+        break;
     }
+
 
 
     glClearColor(1.0, 0.65, 0.45, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    // Cálculo de la vista (cámara)
-    //viewMatrix      = glm::mat4(1.0f);
-    rotateMatrix    = glm::make_mat4(view_rotate);
     //viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
     //viewMatrix      = viewMatrix*rotateMatrix;
     //viewMatrix      = glm::scale(viewMatrix,glm::vec3(scale, scale, scale));
