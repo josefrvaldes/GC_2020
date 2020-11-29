@@ -57,7 +57,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
     tipo = t;
 
     sx = sy = sz = 1;
-    //rx = ry = rz = 0;
+    rx = ry = rz = 0;
 	switch (tipo) {
 		case CARRETERA_ID: {  // Creación de la carretera
 		    tx = ty = tz = 0;
@@ -66,11 +66,20 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/final/suelo.3ds", &num_vertices0);
-            modelo1 = Load3DS("../../Modelos/final/carretera.3ds", &num_vertices1);
+            modelo0 = Load3DS("../../Modelos/final/carretera.3ds", &num_vertices0);
             break;
 		}
-		case PILA_COCHES_1: {  // Creación de la carretera
+		case SUELO_ID: {  // Creación de la carretera
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/final/suelo.3ds", &num_vertices0);
+            break;
+		}
+		case PILA_COCHES_1_ID: {  // Creación de la carretera
 		    tx = ty = tz = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
@@ -82,7 +91,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             break;
 		}
-		case PILA_COCHES_2: {  // Creación de la carretera
+		case PILA_COCHES_2_ID: {  // Creación de la carretera
 		    tx = ty = tz = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
@@ -105,7 +114,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
             // concatenamos el id con el nombre del 3ds, para no repetir código
             ssPath << "../../Modelos/final/vallas/valla" << ID << ".3ds";
             std::string filePath = ssPath.str();
-            std::cout << filePath << std::endl;ç
+            std::cout << filePath << std::endl;
             modelo0 = Load3DS(&filePath[0], &num_vertices0);
             break;
 		}
@@ -149,7 +158,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
             modelo0 = Load3DS("../../Modelos/final/pilas_de_coches/cochesuelto.3ds", &num_vertices0);
             break;
 		}
-		case EDIFICIOS: {
+		case EDIFICIOS_ID: {
 		    tx = ty = tz = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
@@ -171,7 +180,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/final/coche2.0.3ds", &num_vertices0);
+            modelo0 = Load3DS("../../Modelos/final/coche5.0.3ds", &num_vertices0);
             modelo1 = Load3DS("../../Modelos/final/rueda2.0.3ds", &num_vertices1);
             break;
 		}
@@ -199,24 +208,28 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
         case CARRETERA_ID: {
             if (escena.show_road) {
                 RenderStaticObject(modelo0, colores[0], num_vertices0);
-                RenderStaticObject(modelo1, colores[1], num_vertices1);
             }
             break;
         }
 
-        case PILA_COCHES_1: {
+        case SUELO_ID: {
+            RenderStaticObject(modelo0, colores[0], num_vertices0);
+            break;
+        }
+
+        case PILA_COCHES_1_ID: {
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             RenderStaticObject(modelo1, colores[1], num_vertices1);
             break;
         }
 
 
-        case PILA_COCHES_2: {
+        case PILA_COCHES_2_ID: {
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
 
-        case EDIFICIOS: {
+        case EDIFICIOS_ID: {
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             RenderStaticObject(modelo1, colores[1], num_vertices1);
             break;
@@ -251,9 +264,9 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 // Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelMatrix     = glm::translate(modelMatrix,glm::vec3(tx, ty, tz));
-                //modelMatrix     = glm::rotate(modelMatrix, glm::radians(rx),glm::vec3(1,0,0));
-                //modelMatrix     = glm::rotate(modelMatrix, glm::radians(ry),glm::vec3(0,1,0));
-                //modelMatrix     = glm::rotate(modelMatrix, glm::radians(rz),glm::vec3(0,0,1));
+                modelMatrix     = glm::rotate(modelMatrix, glm::radians(rx),glm::vec3(1,0,0));
+                modelMatrix     = glm::rotate(modelMatrix, glm::radians(ry),glm::vec3(0,1,0));
+                modelMatrix     = glm::rotate(modelMatrix, glm::radians(rz),glm::vec3(0,0,1));
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 
@@ -271,56 +284,53 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1+3);
 
-                // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
-                modelMatrix     = glm::mat4(1.0f); // matriz identidad
-
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty+0.25, tz));
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
-
-                modelViewMatrix = escena.viewMatrix * modelMatrix;
-
-                // Envia nuestra ModelView al Vertex Shader
-                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
-
-                glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
-
-                // RUEDA Trasera Derecha : Cálculo de la matriz modelo
-                modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty+0.25, tz));
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
-
-                modelViewMatrix = escena.viewMatrix * modelMatrix;
-
-                // Envia nuestra ModelView al Vertex Shader
-                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
-
-                glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
 
                 // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
-
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty+0.25, tz-2.10));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty-0.2, tz+1.0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
-
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
+
 
                 // Envia nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
-
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
+
 
                 // RUEDA Trasera Derecha : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty+0.25, tz-2.10));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty-0.2, tz+1.0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
 
+
+                // Envia nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
+
+
+                // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty-0.2, tz-1.10));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+
+
+                // Envia nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
+
+
+                // RUEDA Trasera Derecha : Cálculo de la matriz modelo
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty-0.2, tz-1.10));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 
                 // Envia nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
-
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
                 break;
             }
@@ -499,16 +509,30 @@ void __fastcall TEscena::Render()
 {
     glm::mat4 rotateMatrix;
 
+
+    TPrimitiva *coche = GetCar(seleccion);
+    if(coche){
+        float camX = coche->tx - 3 * sin(glm::radians(coche->ry));
+        float camY = coche->ty + 3.0;
+        float camZ = coche->tz - 3 * cos(glm::radians(coche->ry));
+
+        glm::vec3 camPos = glm::vec3(camX, camY, camZ);
+        glm::vec3 camTarget = glm::vec3(coche->tx, coche->ty, coche->tz);
+        glm::vec3 camDirection = glm::normalize(camPos - camTarget);
+        viewMatrix = glm::lookAt(camPos, camTarget, glm::vec3(0,1,0));
+    }
+
+
     glClearColor(1.0, 0.65, 0.45, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // Cálculo de la vista (cámara)
-    viewMatrix      = glm::mat4(1.0f);
+    //viewMatrix      = glm::mat4(1.0f);
     rotateMatrix    = glm::make_mat4(view_rotate);
-    viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
-    viewMatrix      = viewMatrix*rotateMatrix;
-    viewMatrix      = glm::scale(viewMatrix,glm::vec3(scale, scale, scale));
+    //viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
+    //viewMatrix      = viewMatrix*rotateMatrix;
+    //viewMatrix      = glm::scale(viewMatrix,glm::vec3(scale, scale, scale));
 
     glUniform1i(uLuz0Location, gui.light0_enabled);
     glUniformMatrix4fv(uVMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix)); // Para la luz matrix view pero sin escalado!

@@ -29,9 +29,10 @@
 
 // Identificadores internos de los objetos
 #define CARRETERA_ID            10
-#define PILA_COCHES_1           1000
-#define PILA_COCHES_2           1001
-#define EDIFICIOS               1002
+#define SUELO_ID            20
+#define PILA_COCHES_1_ID           1000
+#define PILA_COCHES_2_ID           1001
+#define EDIFICIOS_ID               1002
 #define VALLAS_ID               2000
 #define FAROLAS_ID              3000
 #define NEUMATICOS_ID           4000
