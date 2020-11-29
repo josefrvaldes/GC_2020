@@ -29,9 +29,10 @@
 
 // Identificadores internos de los objetos
 #define CARRETERA_ID            10
-#define PILA_COCHES_1           1000
-#define PILA_COCHES_2           1001
-#define EDIFICIOS               1002
+#define SUELO_ID            20
+#define PILA_COCHES_1_ID           1000
+#define PILA_COCHES_2_ID           1001
+#define EDIFICIOS_ID               1002
 #define VALLAS_ID               2000
 #define FAROLAS_ID              3000
 #define NEUMATICOS_ID           4000
@@ -119,6 +120,9 @@ public: // Atributos de la clase
 		int uVMatrixLocation;
 		int uColorLocation;
 		int uLuz0Location;
+
+		enum CAM_MODES {GENERAL, THIRD_PERSON, FIRST_PERSON, AEREA};
+        CAM_MODES camMode = AEREA;
 
 		glm::mat4 projectionMatrix; // Almacena la matriz de proyección
         glm::mat4 viewMatrix;       // Almacena la matriz de la vista (cámara)
