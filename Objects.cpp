@@ -279,56 +279,89 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
             if (escena.show_wheels)
             {
+
                 glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[1]);
                 // Asociamos los vértices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1+3);
 
 
+
+
+
+
                 // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
+                // llevamos la rueda a su posición en la escena
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty-0.2, tz+1.0));
+                // la devolvemos al centro del coche
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(-0.59, 0, -1.0));
+                // le aplicamos las rotaciones pertinentes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));   // en radianes
+                // volvemos a colocarla en su posición relativa al coche
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(0.59, 0, 1.0));
+                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
-
-
                 // Envia nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
 
 
-                // RUEDA Trasera Derecha : Cálculo de la matriz modelo
+
+
+                // RUEDA Delantera Derecha : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty-0.2, tz+1.0));
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(+0.59, 0, -1.0));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));   // en radianes
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(-0.59, 0, 1.0));
+                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));      // en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
+
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
-
-
                 // Envia nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
 
 
-                // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
+
+
+                // RUEDA Trasera Izquierda : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty-0.2, tz-1.10));
+                // llevamos la rueda a su posición en la escena
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.59, ty-0.2, tz-1.0));
+                // la devolvemos al centro del coche
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(-0.59, 0, 1.0));
+                // le aplicamos las rotaciones pertinentes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));   // en radianes
+                // volvemos a colocarla en su posición relativa al coche
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(0.59, 0, -1.0));
+                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
-
-
                 // Envia nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
+
+
 
 
                 // RUEDA Trasera Derecha : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty-0.2, tz-1.10));
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
+                // llevamos la rueda a su posición en la escena
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.59, ty-0.2, tz-1.0));
+                // la devolvemos al centro del coche
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(+0.59, 0, 1.0));
+                // le aplicamos las rotaciones pertinentes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));   // en radianes
+                // volvemos a colocarla en su posición relativa al coche
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(-0.59, 0, -1.0));
+                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));      // en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
-
                 // Envia nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);

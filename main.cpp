@@ -187,9 +187,10 @@ int main(int argc, char* argv[])
     car2->colores[0][3] = 1.0;
     car2->tx = 0.35;
     car2->ty = 1.9f;
-    car1->ty = 1.9f;
     car2->tz = 3;
-    car1->ry = 112.f;
+
+    car1->ty = 1.9f;
+    car1->ry = 45.f;
     farola1->tz = 10;
 
     escena.AddObject(road);
