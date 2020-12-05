@@ -392,7 +392,7 @@
 	"Objects.h"
 	<GL\glui.h>
 
-1607158476 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.h
+1607167220 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.h
 	"Shader.h"
 	"Program.h"
 	<GL/glui.h>
@@ -884,7 +884,7 @@
 1424014283 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\include\glm\gtc\type_ptr.inl
 	<cstring>
 
-1607165985 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.cpp
+1607167220 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.cpp
 	"Objects.h"
 	<GL/glui.h>
 	<sstream>
