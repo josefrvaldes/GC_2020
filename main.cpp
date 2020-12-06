@@ -95,6 +95,8 @@ void Keyboard(unsigned char Key, int x, int y)
 static void SpecialKey(int key, int x, int y)
 {
     TPrimitiva *car = escena.GetCar(escena.seleccion);
+    if(car == nullptr)
+        return;
 
     switch (key)
     {

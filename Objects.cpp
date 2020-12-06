@@ -208,17 +208,20 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
         case CARRETERA_ID: {
             if (escena.show_road) {
+                glStencilFunc(GL_ALWAYS, 0, 0xFF);
                 RenderStaticObject(modelo0, colores[0], num_vertices0);
             }
             break;
         }
 
         case SUELO_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
 
         case PILA_COCHES_1_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             RenderStaticObject(modelo1, colores[1], num_vertices1);
             break;
@@ -226,37 +229,45 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
 
         case PILA_COCHES_2_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
 
         case EDIFICIOS_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             RenderStaticObject(modelo1, colores[1], num_vertices1);
             break;
         }
 
         case VALLAS_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
 
         case NEUMATICOS_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
 
         case PALOS_NEUMATICOS_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
 
         case FAROLAS_ID: {
+            glStencilFunc(GL_ALWAYS, 0, 0xFF);
             RenderStaticObject(modelo0, colores[0], num_vertices0);
             break;
         }
         case COCHE_ID: {
             if (escena.show_car) {
+                glStencilFunc(GL_ALWAYS, ID, 0xFF);
+
                 glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[0]);
                 // Asociamos los vértices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
@@ -273,6 +284,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 // Envía nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
 
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
             }
@@ -411,6 +423,8 @@ void __fastcall TEscena::InitGL()
 
     // Habilita el z_buffer
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     glDepthFunc(GL_LESS);
 
     // Inicialización de GLEW
@@ -532,6 +546,10 @@ void __fastcall TEscena::Render()
 {
     glm::mat4 rotateMatrix;
 
+    glClearColor(1.0, 0.65, 0.45, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+
 
     switch(camMode) {
     case GENERAL: {
@@ -595,8 +613,6 @@ void __fastcall TEscena::Render()
 
 
 
-    glClearColor(1.0, 0.65, 0.45, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     //viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
@@ -618,6 +634,15 @@ void __fastcall TEscena::Render()
 // Selecciona un objeto a través del ratón
 void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
 {
+    int res = 0;
+    GLint viewport[4];
+    int tx,ty,tw,th;
+
+    GLUI_Master.get_viewport_area(&tx,&ty,&tw,&th);
+    glGetIntegerv(GL_VIEWPORT,viewport);
+    glReadPixels(mouse_x,th - mouse_y + 81, 1, 1, GL_STENCIL_INDEX,GL_UNSIGNED_INT, &res);
+    seleccion = res;
+    //std::cout << "Result of pick3d is " << res << std::endl;
 }
 
 //************************************************************** Clase TGui
@@ -918,6 +943,7 @@ void __fastcall TGui::Motion(int x, int y )
 
 void __fastcall TGui::Mouse(int button, int button_state, int x, int y )
 {
-    escena.Pick3D(x, y);
+    if(button_state == 0)
+        escena.Pick3D(x, y);
 }
 
