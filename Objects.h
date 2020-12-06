@@ -12,10 +12,12 @@
 
 ****************************************************************************************/
 
+
+
 //---------------------------------------------------------------------------
-#ifndef ObjectsH
-#define ObjectsH
 //---------------------------------------------------------------------------
+
+#pragma once
 
 #define GLEW_STATIC
 
@@ -94,6 +96,19 @@ public: // Atributos de la clase
         float   *modelo1;        // modelo a representar
 		int     num_vertices1;   // número de vértices
 
+
+
+
+		//float acceleration = 0.05f;
+        float speedWheelRotation = 3.0f;
+        float speed = 0.1f;
+        float wheelRotation = 0.0f;
+        //const float MAX_SPEED = 1.5f;
+        //const float MAX_SPEED_BACKWARDS = -0.75f;
+        const float MAX_WHEEL_ROTATION = 30.0f;
+
+
+
 public: // Métodos
  		TPrimitiva(int DL, int tipo);
         void __fastcall Render(int seleccion, bool reflejo=false);
@@ -122,7 +137,7 @@ public: // Atributos de la clase
 		int uLuz0Location;
 
 		enum CAM_MODES {GENERAL, THIRD_PERSON, FIRST_PERSON, AEREA};
-        CAM_MODES camMode = GENERAL;
+        CAM_MODES camMode = FIRST_PERSON;
 
 		glm::mat4 projectionMatrix; // Almacena la matriz de proyección
         glm::mat4 viewMatrix;       // Almacena la matriz de la vista (cámara)
@@ -219,4 +234,3 @@ public:
 extern TEscena  escena;
 extern TGui     gui;
 
-#endif

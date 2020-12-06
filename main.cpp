@@ -71,6 +71,7 @@
 ****************************************************************************************************/
 
 #include "Objects.h"
+#include "Car.h"
 #include <GL\glui.h>
 
 /**************************************** myGlutKeyboard() **********/
@@ -99,19 +100,28 @@ static void SpecialKey(int key, int x, int y)
     {
         case GLUT_KEY_UP:  {  // El coche avanza
                 car->rr+=8;
-                float newX = car->tx + 0.05 * sin(glm::radians(car->ry));
-                float newZ = car->tz + 0.05 * cos(glm::radians(car->ry));
+                float newX = car->tx + car->speed * sin(glm::radians(car->ry));
+                float newZ = car->tz + car->speed * cos(glm::radians(car->ry));
                 car->tx = newX;
                 car->tz = newZ;
-            }
-            break;
-        case GLUT_KEY_DOWN:   // El coche retrocede
-            car->rr-=8;
-                float newX = car->tx - 0.05 * sin(glm::radians(car->ry));
-                float newZ = car->tz - 0.05 * cos(glm::radians(car->ry));
+                car->ry += 0.05 * car->wheelRotation;
+            } break;
+        case GLUT_KEY_DOWN: {  // El coche retrocede
+                car->rr-=8;
+                float newX = car->tx - car->speed * sin(glm::radians(car->ry));
+                float newZ = car->tz - car->speed * cos(glm::radians(car->ry));
                 car->tx = newX;
                 car->tz = newZ;
-            break;
+                car->ry -= 0.05 * car->wheelRotation;
+            } break;
+        case GLUT_KEY_LEFT: {   // El coche gira izquierda
+                if(car->wheelRotation < car->MAX_WHEEL_ROTATION)
+                    car->wheelRotation += car->speedWheelRotation;
+            } break;
+        case GLUT_KEY_RIGHT: {  // El coche gira derecha
+                if(car->wheelRotation > -car->MAX_WHEEL_ROTATION)
+                    car->wheelRotation -= car->speedWheelRotation;
+            } break;
     }
 
     glutPostRedisplay();
