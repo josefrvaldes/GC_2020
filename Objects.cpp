@@ -658,10 +658,17 @@ void __fastcall TGui::Init(int main_window) {
     GLUI_Panel *panel0 = new GLUI_Panel(glui, "Seleccion");
     GLUI_RadioGroup *radioGroup = new GLUI_RadioGroup(panel0, &sel, SEL_ID, controlCallback);
     glui->add_radiobutton_to_group(radioGroup, "NINGUNO");
-
-
     glui->add_radiobutton_to_group(radioGroup, "COCHE 1");
     glui->add_radiobutton_to_group(radioGroup, "COCHE 2");
+
+
+
+    GLUI_Panel *panelCams = new GLUI_Panel(glui, "Cámaras");
+    GLUI_RadioGroup *radioGroupCams = new GLUI_RadioGroup(panelCams, &cam, CAM_ID, controlCallback);
+    glui->add_radiobutton_to_group(radioGroupCams, "Normal");
+    glui->add_radiobutton_to_group(radioGroupCams, "Primera persona");
+    glui->add_radiobutton_to_group(radioGroupCams, "Tercera persona");
+    glui->add_radiobutton_to_group(radioGroupCams, "Aerea");
 
 
     // Añade una separación
@@ -839,6 +846,24 @@ void __fastcall TGui::ControlCallback( int control )
             escena.seleccion = sel;
             //GLUI_Master.SetFocus(true);
             glutSetWindow( glui->get_glut_window_id() );
+            break;
+        }
+        case CAM_ID: {
+            switch(cam) {
+                case 0:
+                    escena.camMode = TEscena::GENERAL;
+                    break;
+                case 1:
+                    escena.camMode = TEscena::FIRST_PERSON;
+                    break;
+                case 2:
+                    escena.camMode = TEscena::THIRD_PERSON;
+                    break;
+                case 3:
+                    escena.camMode = TEscena::AEREA;
+                    break;
+            }
+
             break;
         }
   } // switch
