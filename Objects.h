@@ -59,6 +59,8 @@
 
 #define SEL_ID               500
 
+#define CAM_ID               600
+
 // Datos del formato 3DS (x, y, z, A, B, C, u, v)
 #define POSITION_COMPONENT_COUNT    3
 #define NORMAL_COMPONENT_COUNT      3
@@ -137,7 +139,7 @@ public: // Atributos de la clase
 		int uLuz0Location;
 
 		enum CAM_MODES {GENERAL, THIRD_PERSON, FIRST_PERSON, AEREA};
-        CAM_MODES camMode = FIRST_PERSON;
+        CAM_MODES camMode = THIRD_PERSON;
 
 		glm::mat4 projectionMatrix; // Almacena la matriz de proyección
         glm::mat4 viewMatrix;       // Almacena la matriz de la vista (cámara)
@@ -204,6 +206,7 @@ public:
 
         // live variables usadas por GLUI
         int             sel;
+        int             cam = 2;
         int             enable_panel2;
         int             light0_enabled;
         int             light1_enabled;
