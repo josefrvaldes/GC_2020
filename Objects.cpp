@@ -642,6 +642,8 @@ void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
     glGetIntegerv(GL_VIEWPORT,viewport);
     glReadPixels(mouse_x,th - mouse_y + 81, 1, 1, GL_STENCIL_INDEX,GL_UNSIGNED_INT, &res);
     seleccion = res;
+    gui.sel = res;
+    gui.glui->sync_live();
     //std::cout << "Result of pick3d is " << res << std::endl;
 }
 
