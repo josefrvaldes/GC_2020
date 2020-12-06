@@ -14,6 +14,7 @@
 *****************************************************************************************/
 
 #include "Objects.h"
+#include "Car.h"
 #include <GL/glui.h>
 #include <sstream>
 #include <string>
@@ -303,7 +304,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));
                 // volvemos a colocarla en su posición relativa al coche
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(OFFSET_LEFT_RIGHT, 0, OFFSET_FORWARD));
-                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(wheelRotation), glm::vec3(0,1,0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
@@ -320,7 +321,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(OFFSET_LEFT_RIGHT, 0, -OFFSET_FORWARD));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(-OFFSET_LEFT_RIGHT, 0, OFFSET_FORWARD));
-                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(wheelRotation), glm::vec3(0,1,0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
@@ -335,7 +336,6 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(-OFFSET_LEFT_RIGHT, 0, OFFSET_BACK));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(OFFSET_LEFT_RIGHT, 0, -OFFSET_BACK));
-                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
@@ -351,7 +351,6 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(OFFSET_LEFT_RIGHT, 0, OFFSET_BACK));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0));
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(-OFFSET_LEFT_RIGHT, 0, -OFFSET_BACK));
-                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(anguloRuedas), glm::vec3(0,1,0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);

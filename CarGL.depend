@@ -388,11 +388,12 @@
 1445363315 source:c:\users\neikl\onedrive\nube\im\quinto\gc\prac1\shader.cpp
 	"Shader.h"
 
-1607165856 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\main.cpp
+1607247892 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\main.cpp
 	"Objects.h"
+	"Car.h"
 	<GL\glui.h>
 
-1607167220 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.h
+1607248050 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.h
 	"Shader.h"
 	"Program.h"
 	<GL/glui.h>
@@ -884,8 +885,9 @@
 1424014283 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\include\glm\gtc\type_ptr.inl
 	<cstring>
 
-1607167220 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.cpp
+1607247867 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.cpp
 	"Objects.h"
+	"Car.h"
 	<GL/glui.h>
 	<sstream>
 	<string>
@@ -901,4 +903,10 @@
 
 1445363315 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\shader.cpp
 	"Shader.h"
+
+1607245186 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\src\car.cpp
+	"Car.h"
+
+1607247161 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\include\car.h
+	"../Objects.h"
 
