@@ -46,10 +46,13 @@
 // IDs para los callbacks de TGui
 #define LIGHT0_ENABLED_ID    200
 #define LIGHT1_ENABLED_ID    201
+#define LIGHT2_ENABLED_ID    202
 #define LIGHT0_POSITION_ID   210
 #define LIGHT1_POSITION_ID   211
+#define LIGHT2_POSITION_ID   212
 #define LIGHT0_INTENSITY_ID  220
 #define LIGHT1_INTENSITY_ID  221
+#define LIGHT2_INTENSITY_ID  222
 
 
 #define ENABLE_ID            300
@@ -77,8 +80,24 @@
 #define U_MVMATRIX              "u_MVMatrix"
 #define U_VMATRIX               "u_VMatrix"
 #define U_COLOR                 "u_Color"
-#define U_LUZ0                  "u_Luz0"
 
+#define U_LUZ0                  "u_Luz0"
+#define U_LUZ_INTENSITY_0       "u_Luz_Intensity_0"
+#define U_LUZ_X_0               "u_Luz_X_0"
+#define U_LUZ_Y_0               "u_Luz_Y_0"
+#define U_LUZ_Z_0               "u_Luz_Z_0"
+
+#define U_LUZ1                  "u_Luz1"
+#define U_LUZ_INTENSITY_1       "u_Luz_Intensity_1"
+#define U_LUZ_X_1               "u_Luz_X_1"
+#define U_LUZ_Y_1               "u_Luz_Y_1"
+#define U_LUZ_Z_1               "u_Luz_Z_1"
+
+#define U_LUZ2                  "u_Luz2"
+#define U_LUZ_INTENSITY_2       "u_Luz_Intensity_2"
+#define U_LUZ_X_2               "u_Luz_X_2"
+#define U_LUZ_Y_2               "u_Luz_Y_2"
+#define U_LUZ_Z_2               "u_Luz_Z_2"
 //************************************************************** Clase TPrimtiva
 
 class TPrimitiva
@@ -136,7 +155,27 @@ public: // Atributos de la clase
         int uMVMatrixLocation;
 		int uVMatrixLocation;
 		int uColorLocation;
+
+		// luz0
 		int uLuz0Location;
+		int uLuz0I;
+		int uLuz0X;
+		int uLuz0Y;
+		int uLuz0Z;
+
+		// luz1
+		int uLuz1Location;
+		int uLuz1I;
+		int uLuz1X;
+		int uLuz1Y;
+		int uLuz1Z;
+
+		// luz2
+		int uLuz2Location;
+		int uLuz2I;
+		int uLuz2X;
+		int uLuz2Y;
+		int uLuz2Z;
 
 		enum CAM_MODES {GENERAL, THIRD_PERSON, FIRST_PERSON, AEREA};
         CAM_MODES camMode = THIRD_PERSON;
@@ -156,6 +195,11 @@ public: // Atributos de la clase
         GLfloat light1_diffuse[4];
         GLfloat light1_specular[4];
         GLfloat light1_position[4];
+
+        GLfloat light2_ambient[4];
+        GLfloat light2_diffuse[4];
+        GLfloat light2_specular[4];
+        GLfloat light2_position[4];
 
         GLfloat mat_ambient[4];
         GLfloat mat_diffuse[4];
@@ -210,14 +254,18 @@ public:
         int             enable_panel2;
         int             light0_enabled;
         int             light1_enabled;
+        int             light2_enabled;
         float           light0_intensity;
         float           light1_intensity;
+        float           light2_intensity;
         float           light0_position[4];
         float           light1_position[4];
+        float           light2_position[4];
 
         GLUI            *glui, *glui2;
         GLUI_Spinner    *light0_spinner;
         GLUI_Spinner    *light1_spinner;
+        GLUI_Spinner    *light2_spinner;
         GLUI_RadioGroup *radio;
         GLUI_Panel      *obj_panel;
         GLUI_Rotation   *view_rot;
