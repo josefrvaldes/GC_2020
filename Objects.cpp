@@ -35,7 +35,7 @@ GLfloat light1_position_c[4] = {   0.0f, 100.0f,  0.0f, 1.0f };
 GLfloat light2_ambient_c[4]  = {   0.2f,   0.2f,  0.2f, 1.0f };
 GLfloat light2_diffuse_c[4]  = {   0.8f,   0.8f,  0.8f, 1.0f };
 GLfloat light2_specular_c[4] = {   1.0f,   1.0f,  1.0f, 1.0f };
-GLfloat light2_position_c[4] = {   0.0f, 100.0f,  0.0f, 1.0f };
+GLfloat light2_position_c[4] = {   50.0f, 100.0f,  0.0f, 1.0f };
 
 GLfloat mat_ambient_c[4]    = { 0.7f, 0.7f, 0.7f, 1.0f };
 GLfloat mat_diffuse_c[4]    = { 0.8f, 0.8f, 0.8f, 1.0f };
@@ -509,6 +509,21 @@ void __fastcall TEscena::InitGL()
     xy_aspect = (float)tw / (float)th;
     projectionMatrix = glm::perspective(45.0f, xy_aspect, 0.1f, 1000.0f);
     glUniformMatrix4fv(uProjectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+
+
+    glUniform1f(escena.uLuz0X,escena.light0_position[0]);
+    glUniform1f(escena.uLuz0Y,escena.light0_position[1]);
+    glUniform1f(escena.uLuz0Z,escena.light0_position[2]);
+
+
+    glUniform1f(escena.uLuz1X,escena.light1_position[0]);
+    glUniform1f(escena.uLuz1Y,escena.light1_position[1]);
+    glUniform1f(escena.uLuz1Z,escena.light1_position[2]);
+
+
+    glUniform1f(escena.uLuz2X,escena.light2_position[0]);
+    glUniform1f(escena.uLuz2Y,escena.light2_position[1]);
+    glUniform1f(escena.uLuz2Z,escena.light2_position[2]);
 }
 
 
@@ -692,8 +707,8 @@ TGui::TGui()
     light2_enabled = 1;
 
     light0_intensity = 0.8;
-    light1_intensity = 0.8;
-    light2_intensity = 0.8;
+    light1_intensity = 0.3;
+    light2_intensity = 0.25;
 
     memcpy(light0_position, light0_position_c, 4*sizeof(float));
     memcpy(light1_position, light1_position_c, 4*sizeof(float));
@@ -767,11 +782,11 @@ void __fastcall TGui::Init(int main_window) {
     light0_spinner->set_float_limits( 0.0, 1.0 );
     GLUI_Scrollbar *sb;
     sb = new GLUI_Scrollbar( light0, "X",GLUI_SCROLL_HORIZONTAL, &escena.light0_position[0],LIGHT0_POSITION_ID,controlCallback);
-    sb->set_float_limits(-100,1000);
+    sb->set_float_limits(-100,100);
     sb = new GLUI_Scrollbar( light0, "Y",GLUI_SCROLL_HORIZONTAL, &escena.light0_position[1],LIGHT0_POSITION_ID,controlCallback);
-    sb->set_float_limits(-100,1000);
+    sb->set_float_limits(-100,100);
     sb = new GLUI_Scrollbar( light0, "Z",GLUI_SCROLL_HORIZONTAL, &escena.light0_position[2],LIGHT0_POSITION_ID,controlCallback);
-    sb->set_float_limits(-100,1000);
+    sb->set_float_limits(-100,100);
 
 
 
