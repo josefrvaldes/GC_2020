@@ -32,6 +32,11 @@ GLfloat light1_diffuse_c[4]  = {   0.8f,   0.8f,  0.8f, 1.0f };
 GLfloat light1_specular_c[4] = {   1.0f,   1.0f,  1.0f, 1.0f };
 GLfloat light1_position_c[4] = {   0.0f, 100.0f,  0.0f, 1.0f };
 
+GLfloat light2_ambient_c[4]  = {   0.2f,   0.2f,  0.2f, 1.0f };
+GLfloat light2_diffuse_c[4]  = {   0.8f,   0.8f,  0.8f, 1.0f };
+GLfloat light2_specular_c[4] = {   1.0f,   1.0f,  1.0f, 1.0f };
+GLfloat light2_position_c[4] = {   0.0f, 100.0f,  0.0f, 1.0f };
+
 GLfloat mat_ambient_c[4]    = { 0.7f, 0.7f, 0.7f, 1.0f };
 GLfloat mat_diffuse_c[4]    = { 0.8f, 0.8f, 0.8f, 1.0f };
 GLfloat mat_specular_c[4]   = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -400,8 +405,6 @@ TEscena::TEscena() {
     memcpy(view_rotate, view_rotate_c, 16*sizeof(float));
 
     memcpy(light0_ambient, light0_ambient_c, 4*sizeof(float));
-
-    memcpy(light0_ambient, light0_ambient_c, 4*sizeof(float));
     memcpy(light0_diffuse, light0_diffuse_c, 4*sizeof(float));
     memcpy(light0_specular, light0_specular_c, 4*sizeof(float));
     memcpy(light0_position, light0_position_c, 4*sizeof(float));
@@ -410,6 +413,11 @@ TEscena::TEscena() {
     memcpy(light1_diffuse, light1_diffuse_c, 4*sizeof(float));
     memcpy(light1_specular, light1_specular_c, 4*sizeof(float));
     memcpy(light1_position, light1_position_c, 4*sizeof(float));
+
+    memcpy(light2_ambient, light2_ambient_c, 4*sizeof(float));
+    memcpy(light2_diffuse, light2_diffuse_c, 4*sizeof(float));
+    memcpy(light2_specular, light2_specular_c, 4*sizeof(float));
+    memcpy(light2_position, light2_position_c, 4*sizeof(float));
 
     memcpy(mat_ambient, mat_ambient_c, 4*sizeof(float));
     memcpy(mat_diffuse, mat_diffuse_c, 4*sizeof(float));
@@ -639,6 +647,12 @@ void __fastcall TEscena::Render()
     glUniform1i(uLuz0Location, gui.light0_enabled);
     glUniform1f(uLuz0I, gui.light0_intensity);
 
+    glUniform1i(uLuz1Location, gui.light1_enabled);
+    glUniform1f(uLuz1I, gui.light1_intensity);
+
+    glUniform1i(uLuz2Location, gui.light2_enabled);
+    glUniform1f(uLuz2I, gui.light2_intensity);
+
 
     glUniformMatrix4fv(uVMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix)); // Para la luz matrix view pero sin escalado!
 
@@ -683,6 +697,7 @@ TGui::TGui()
 
     memcpy(light0_position, light0_position_c, 4*sizeof(float));
     memcpy(light1_position, light1_position_c, 4*sizeof(float));
+    memcpy(light2_position, light2_position_c, 4*sizeof(float));
 }
 
 void controlCallback(int control)
@@ -912,10 +927,19 @@ void __fastcall TGui::ControlCallback( int control )
             break;
         }
         case LIGHT0_POSITION_ID: {
-            //En escena.light0_position[] tenemos el x y z de la luz
             glUniform1f(escena.uLuz0X,escena.light0_position[0]);
             glUniform1f(escena.uLuz0Y,escena.light0_position[1]);
             glUniform1f(escena.uLuz0Z,escena.light0_position[2]);
+        }
+        case LIGHT1_POSITION_ID: {
+            glUniform1f(escena.uLuz1X,escena.light1_position[0]);
+            glUniform1f(escena.uLuz1Y,escena.light1_position[1]);
+            glUniform1f(escena.uLuz1Z,escena.light1_position[2]);
+        }
+        case LIGHT2_POSITION_ID: {
+            glUniform1f(escena.uLuz2X,escena.light2_position[0]);
+            glUniform1f(escena.uLuz2Y,escena.light2_position[1]);
+            glUniform1f(escena.uLuz2Z,escena.light2_position[2]);
 
         }
         case ENABLE_ID: {
