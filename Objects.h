@@ -67,6 +67,8 @@
 #define CULLING_ID           700
 #define Z_BUFFER_ID          800
 #define MODO_VISTA_ID          900
+#define SENTIDO_ID          910
+#define SOMBREADO_ID          920
 
 // Datos del formato 3DS (x, y, z, A, B, C, u, v)
 #define POSITION_COMPONENT_COUNT    3
@@ -218,6 +220,8 @@ public: // Atributos de la clase
         int     z_buffer;
         int     culling;
         int     modo_vista;
+        int     sentido;
+        int     sombreado;
 
         int     show_car;
         int     show_wheels;

@@ -763,6 +763,8 @@ void __fastcall TGui::Init(int main_window) {
     glui->add_column_to_panel(obj_panel, true);
     new GLUI_Checkbox( obj_panel, "Culling", &escena.culling, CULLING_ID, controlCallback );
     new GLUI_Checkbox( obj_panel, "Z Buffer", &escena.z_buffer, Z_BUFFER_ID, controlCallback );
+    new GLUI_Checkbox( obj_panel, "Sentido horario", &escena.sentido, SENTIDO_ID, controlCallback );
+    new GLUI_Checkbox( obj_panel, "Modo Sombreado", &escena.sombreado, SOMBREADO_ID, controlCallback );
 
     GLUI_RadioGroup *radioGroup2 = new GLUI_RadioGroup(obj_panel, &escena.modo_vista, MODO_VISTA_ID, controlCallback);
     glui->add_radiobutton_to_group(radioGroup2,"Modo solido");
@@ -1041,6 +1043,31 @@ void __fastcall TGui::ControlCallback( int control )
                 }
             break;
 
+            break;
+        }
+
+        case SOMBREADO_ID: {
+            glEnable(GL_SHADE_MODEL);
+            if(escena.sombreado){
+                printf("Sombreado activado...\n");
+                glShadeModel(GL_SMOOTH);//SUAVIZADO
+            }else{
+                printf("Sombreado desactivado...\n");
+                glShadeModel(GL_FLAT);//PLANO;
+            }
+
+            break;
+        }
+
+        case SENTIDO_ID: {
+            glEnable(GL_FRONT_FACE);
+            if(escena.sentido){
+                printf("Sentido antihorario...\n");
+                glFrontFace(GL_CCW);//ANTIHORARIO
+            }else{
+                printf("Sentido horario...\n");
+                glFrontFace(GL_CW);//HORARIO
+            }
             break;
         }
   } // switch
