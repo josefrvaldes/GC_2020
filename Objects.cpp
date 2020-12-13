@@ -759,10 +759,16 @@ void __fastcall TGui::Init(int main_window) {
 
     /***** Control para las propiedades de escena *****/
 
-    new GLUI_Checkbox( obj_panel, "Modo Alambrico", &escena.wireframe, 1, controlCallback );
+    //new GLUI_Checkbox( obj_panel, "Modo Alambrico", &escena.wireframe, 1, controlCallback );
     glui->add_column_to_panel(obj_panel, true);
-    new GLUI_Checkbox( obj_panel, "Culling", &escena.culling, 1, controlCallback );
-    new GLUI_Checkbox( obj_panel, "Z Buffer", &escena.z_buffer, 1, controlCallback );
+    new GLUI_Checkbox( obj_panel, "Culling", &escena.culling, CULLING_ID, controlCallback );
+    new GLUI_Checkbox( obj_panel, "Z Buffer", &escena.z_buffer, Z_BUFFER_ID, controlCallback );
+
+    GLUI_RadioGroup *radioGroup2 = new GLUI_RadioGroup(obj_panel, &escena.modo_vista, MODO_VISTA_ID, controlCallback);
+    glui->add_radiobutton_to_group(radioGroup2,"Modo solido");
+    glui->add_radiobutton_to_group(radioGroup2,"Modo alambrico");
+    glui->add_radiobutton_to_group(radioGroup2,"Modo puntos");
+
 
     /******** Añade controles para las luces ********/
 
@@ -992,6 +998,48 @@ void __fastcall TGui::ControlCallback( int control )
                     escena.camMode = TEscena::AEREA;
                     break;
             }
+
+            break;
+        }
+
+        case CULLING_ID: {
+            if(escena.culling){
+                glEnable(GL_CULL_FACE);
+                glCullFace(GL_FRONT);
+            } else {
+                glDisable(GL_CULL_FACE);
+            }
+
+            break;
+        }
+
+        case Z_BUFFER_ID: {
+            if(escena.z_buffer){
+                glEnable(GL_DEPTH_TEST);
+
+            }else{
+                glDisable(GL_DEPTH_TEST);
+            }
+
+            break;
+        }
+
+        case MODO_VISTA_ID: {
+            switch(escena.modo_vista) {
+                case 0:
+                    glPolygonMode(GL_FRONT, GL_FILL);
+                    glPolygonMode(GL_BACK, GL_FILL);
+                    break;
+                case 1:
+                    glPolygonMode(GL_FRONT, GL_LINE);//DELANTERO
+                    glPolygonMode(GL_BACK, GL_LINE);//TRASERO
+                    break;
+                case 2:
+                    glPolygonMode(GL_FRONT, GL_POINT);//DELANTERO
+                    glPolygonMode(GL_BACK, GL_POINT);//TRASERO
+                    break;
+                }
+            break;
 
             break;
         }

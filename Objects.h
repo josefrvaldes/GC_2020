@@ -64,6 +64,10 @@
 
 #define CAM_ID               600
 
+#define CULLING_ID           700
+#define Z_BUFFER_ID          800
+#define MODO_VISTA_ID          900
+
 // Datos del formato 3DS (x, y, z, A, B, C, u, v)
 #define POSITION_COMPONENT_COUNT    3
 #define NORMAL_COMPONENT_COUNT      3
@@ -213,6 +217,7 @@ public: // Atributos de la clase
         int     wireframe;
         int     z_buffer;
         int     culling;
+        int     modo_vista;
 
         int     show_car;
         int     show_wheels;
