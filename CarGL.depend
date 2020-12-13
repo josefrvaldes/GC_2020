@@ -388,7 +388,7 @@
 1445363315 source:c:\users\neikl\onedrive\nube\im\quinto\gc\prac1\shader.cpp
 	"Shader.h"
 
-1607253451 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\main.cpp
+1607856773 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\main.cpp
 	"Objects.h"
 	"Car.h"
 	<GL\glui.h>
@@ -885,7 +885,7 @@
 1424014283 c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\include\glm\gtc\type_ptr.inl
 	<cstring>
 
-1607851740 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.cpp
+1607856739 source:c:\users\neikl\onedrive\nube\im\quinto\gc\gc_2020\objects.cpp
 	"Objects.h"
 	"Car.h"
 	<GL/glui.h>
