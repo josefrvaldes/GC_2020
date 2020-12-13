@@ -46,7 +46,8 @@ GLfloat mat_shininess_c[1] = { 100.0f };
 float view_rotate_c[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 };
 float view_position_c[3] = { 0.0, -2.0, -9.0 };
 
-float coloresc_c[2][4] = { {0.8, 0.5, 0.0, 1.0}, {0.5, 0.5, 0.5, 1.0}}; // Color del coche
+float coloresc_seleccionado[4] = {1.0, 1.0, 0.0, 1.0};
+float coloresc_c[2][4] = { {0.1, 1.0, 0.1, 1.0}, {0.5, 0.5, 0.5, 1.0}}; // Color del coche
 float coloresr_c[2][4] = { {0.3, 0.3, 0.3, 1.0}, {1.0, 1.0, 1.0, 1.0}}; // Color de la carretera
 
 //************************************************************** Variables de clase
@@ -273,7 +274,11 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             if (escena.show_car) {
                 glStencilFunc(GL_ALWAYS, ID, 0xFF);
 
-                glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[0]);
+                if(seleccion == ID) {
+                    glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) coloresc_seleccionado);
+                } else {
+                    glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[0]);
+                }
                 // Asociamos los vértices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);

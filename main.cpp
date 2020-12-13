@@ -200,8 +200,8 @@ int main(int argc, char* argv[])
     TPrimitiva *car1 = new TPrimitiva(1, COCHE_ID);
     TPrimitiva *car2 = new TPrimitiva(2, COCHE_ID);
 
-    car2->colores[0][0] = 0.3;
-    car2->colores[0][1] = 0.8;
+    car2->colores[0][0] = 1.0;
+    car2->colores[0][1] = 0.1;
     car2->colores[0][2] = 0.4;
     car2->colores[0][3] = 1.0;
     car2->tx = 0.35;
